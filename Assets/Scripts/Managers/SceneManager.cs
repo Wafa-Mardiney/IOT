@@ -7,7 +7,15 @@ public class SceneManager : Singleton<SceneManager>
     public MenuManager menuManager;
     public int currentMsgIndex = 0;
     public CameraController cameraController;
-    public Transform[] allSignalPoints;
+    //public GameObject[] allSignals;
+    public SignalSpawner signalSpawner;
+    public bool sendingSignals = false;
+    public GameObject[] allRoots;
+    public GameObject signalPrefab;
+    public float signalSpawnSpeed = 0.5f;
+    public GameObject RootIconParent;
+    public GameObject idleScreenAssets;
+    public GameObject userLoginAssets;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +31,24 @@ public class SceneManager : Singleton<SceneManager>
     private void OnEnable()
     {
         currentMsgIndex = 0;
-        startExperience();
+        //startExperience();
+        startLoginProcedure();
+    }
+
+
+
+    public void startLoginProcedure()
+    {
+        StartCoroutine(loginProcedure());
+    }
+
+    IEnumerator loginProcedure()
+    {
+        idleScreenAssets.SetActive(true);
+        yield return new WaitForSeconds(3);
+        idleScreenAssets.SetActive(false);
+        userLoginAssets.SetActive(true);
+        yield return new WaitForSeconds(3);
     }
 
     public void startExperience()
@@ -33,7 +58,14 @@ public class SceneManager : Singleton<SceneManager>
 
     IEnumerator experienceWithTime()
     {
-        yield return new WaitForSeconds(1); ;
+        menuManager.message.text = "Welcome User!";
+        menuManager.message.GetComponent<textFadeInNOut>().fadeIn();
+        yield return new WaitForSeconds(6);
+        menuManager.message.GetComponent<textFadeInNOut>().fadeOut();
+        yield return new WaitForSeconds(3);
+        userLoginAssets.SetActive(false);
+        yield return new WaitForSeconds(1);
+        cameraController.startNextAnimation();
         menuManager.message.text = menuManager.Slide1Msgs[currentMsgIndex];
         currentMsgIndex++;
         menuManager.message.GetComponent<textFadeInNOut>().fadeIn();
@@ -52,6 +84,8 @@ public class SceneManager : Singleton<SceneManager>
         }
         menuManager.clickingHand.GetComponent<SlidesSlider>().removeFromScreen();
         cameraController.startNextAnimation();
+        startSignals();
+        RootIconParent.SetActive(true);
         menuManager.headline.text = menuManager.slide3Headline;
         menuManager.headline.GetComponent<textFadeInNOut>().fadeIn();
         yield return new WaitForSeconds(2);
@@ -68,5 +102,21 @@ public class SceneManager : Singleton<SceneManager>
             yield return new WaitForSeconds(2);
         }
 
+    }
+
+    public void startSignals()
+    {
+        sendingSignals = true;
+        StartCoroutine(startSignalWithDelay());
+    }
+
+    IEnumerator startSignalWithDelay()
+    {
+        while (sendingSignals)
+        {
+            yield return new WaitForSeconds(signalSpawnSpeed);
+            GameObject temp = Instantiate(signalPrefab, signalSpawner.transform);
+            temp.GetComponent<ParabolaController>().FollowParabola();
+        }
     }
 }
