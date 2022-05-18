@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent( typeof(LineRenderer) )]
-public class CurvedLineRenderer : MonoBehaviour 
+public class CurvedLineRendererAdvance : MonoBehaviour 
 {
 	//PUBLIC
 	public float lineSegmentSize = 0.15f;
@@ -20,7 +20,7 @@ public class CurvedLineRenderer : MonoBehaviour
 	// Update is called once per frame
 	public void Update () 
 	{
-		GetPoints();
+		//GetPoints();
 		SetPointsToLine();
 		float offset = Time.time * -2;
 		LineRenderer line = this.GetComponent<LineRenderer>();

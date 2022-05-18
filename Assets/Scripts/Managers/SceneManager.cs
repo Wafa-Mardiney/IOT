@@ -16,6 +16,9 @@ public class SceneManager : Singleton<SceneManager>
     public GameObject RootIconParent;
     public GameObject idleScreenAssets;
     public GameObject userLoginAssets;
+    public GameObject ARTarget;
+    public GameObject ARCamera;
+    public GameObject environment;
     // Start is called before the first frame update
     void Start()
     {
@@ -101,6 +104,9 @@ public class SceneManager : Singleton<SceneManager>
             menuManager.message.GetComponent<SlidesSlider>().removeFromScreen();
             yield return new WaitForSeconds(2);
         }
+        environment.SetActive(false);
+        ARCamera.SetActive(true);
+        ARTarget.SetActive(true);
 
     }
 
