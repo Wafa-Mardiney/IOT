@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent( typeof(LineRenderer) )]
-public class CurvedLineRenderer : MonoBehaviour 
+public class CurvedLineRendererAdvance : MonoBehaviour 
 {
 	//PUBLIC
 	public float lineSegmentSize = 0.15f;
@@ -11,9 +11,9 @@ public class CurvedLineRenderer : MonoBehaviour
 	[Header("Gizmos")]
 	public bool showGizmos = true;
 	public float gizmoSize = 0.1f;
+	public CurvedLinePoint[] linePoints;
 	public Color gizmoColor = new Color(1,0,0,0.5f);
 	//PRIVATE
-	private CurvedLinePoint[] linePoints = new CurvedLinePoint[0];
 	private Vector3[] linePositions = new Vector3[0];
 	private Vector3[] linePositionsOld = new Vector3[0];
 
@@ -31,7 +31,7 @@ public class CurvedLineRenderer : MonoBehaviour
 	void GetPoints()
 	{
 		//find curved points in children
-		linePoints = this.GetComponentsInChildren<CurvedLinePoint>();
+		//linePoints = this.GetComponentsInChildren<CurvedLinePoint>();
 
 		//add positions
 		linePositions = new Vector3[linePoints.Length];

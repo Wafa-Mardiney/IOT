@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent( typeof(LineRenderer) )]
-public class CurvedLineRendererAdvance : MonoBehaviour 
+public class CurvedLineRenderer : MonoBehaviour 
 {
 	//PUBLIC
 	public float lineSegmentSize = 0.15f;
