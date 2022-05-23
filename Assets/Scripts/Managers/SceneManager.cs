@@ -19,6 +19,10 @@ public class SceneManager : Singleton<SceneManager>
     public GameObject ARTarget;
     public GameObject ARCamera;
     public GameObject environment;
+    public GameObject[] arSlides;
+    public GameObject[] arIcons;
+    public GameObject player;
+    public GameObject device;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +56,8 @@ public class SceneManager : Singleton<SceneManager>
         idleScreenAssets.SetActive(false);
         userLoginAssets.SetActive(true);
         yield return new WaitForSeconds(3);
+        yield return null;
+        //startExperience();
     }
 
     public void startExperience()
@@ -105,9 +111,33 @@ public class SceneManager : Singleton<SceneManager>
             yield return new WaitForSeconds(2);
         }
         environment.SetActive(false);
+        RootIconParent.SetActive(false);
+        device.SetActive(false);
+        player.SetActive(false);
         ARCamera.SetActive(true);
         ARTarget.SetActive(true);
-
+        for (int i = 0; i < arSlides.Length; i++)
+        {
+            arSlides[i].SetActive(true);
+            arIcons[i].SetActive(true);
+            menuManager.message.GetComponent<SlidesSlider>().Reset();
+            menuManager.message.text = menuManager.arSlidesMsg[i];
+            menuManager.message.GetComponent<SlidesSlider>().showOnScreen();
+            yield return new WaitForSeconds(4);
+            menuManager.message.GetComponent<SlidesSlider>().removeFromScreen();
+            yield return new WaitForSeconds(3);
+            arSlides[i].SetActive(false);
+            arIcons[i].SetActive(false);
+        }
+        environment.SetActive(true);
+        ARCamera.SetActive(false);
+        ARTarget.SetActive(false);
+        RootIconParent.SetActive(true);
+        device.SetActive(true);
+        player.SetActive(true);
+        yield return new WaitForSeconds(1);
+        cameraController.startNextAnimation();
+        idleScreenAssets.SetActive(true);
     }
 
     public void startSignals()

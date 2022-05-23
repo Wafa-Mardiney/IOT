@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour
     public string[] Slide1Msgs, slide2Msg, slide3Msg;
     [TextArea]
     public string slide3Headline, slide4Headline;
+    [TextArea]
+    public string[] arSlidesMsg;
     public int currentMsg = 0;
     public GameObject clickingHand;
     // Start is called before the first frame update

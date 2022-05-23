@@ -24,7 +24,7 @@ public class CurvedLineRenderer : MonoBehaviour
 		SetPointsToLine();
 		float offset = Time.time * -2;
 		LineRenderer line = this.GetComponent<LineRenderer>();
-		line.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
+		line.sharedMaterial.SetTextureOffset("_MainTex", new Vector2(offset, 0));
 		
 	}
 
