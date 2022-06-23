@@ -21,7 +21,7 @@ public class WpPatrol : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("PatrolNow", 2);
+        //Invoke("PatrolNow", 2);
         IsMoving = true;
         
     }

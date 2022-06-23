@@ -16,9 +16,8 @@ public class SceneManager : Singleton<SceneManager>
     public GameObject RootIconParent;
     public GameObject idleScreenAssets;
     public GameObject userLoginAssets;
-    public GameObject ARTarget;
-    public GameObject ARCamera;
     public GameObject environment;
+    public GameObject realtimeEnvironment;
     public GameObject[] arSlides;
     public GameObject[] arIcons;
     public GameObject player;
@@ -62,10 +61,11 @@ public class SceneManager : Singleton<SceneManager>
 
     public void startExperience()
     {
-        StartCoroutine(experienceWithTime());
+        //StartCoroutine(PlayIntroduction());
+        StartCoroutine(PlayAnimations());
     }
 
-    IEnumerator experienceWithTime()
+    IEnumerator PlayIntroduction()
     {
         menuManager.message.text = "Welcome User!";
         menuManager.message.GetComponent<textFadeInNOut>().fadeIn();
@@ -114,8 +114,13 @@ public class SceneManager : Singleton<SceneManager>
         RootIconParent.SetActive(false);
         device.SetActive(false);
         player.SetActive(false);
-        ARCamera.SetActive(true);
-        ARTarget.SetActive(true);
+        yield return PlayAnimations();
+    }
+
+    IEnumerator PlayAnimations()
+    {
+        realtimeEnvironment.SetActive(true);
+        //start Ar  Experience
         for (int i = 0; i < arSlides.Length; i++)
         {
             arSlides[i].SetActive(true);
@@ -130,14 +135,15 @@ public class SceneManager : Singleton<SceneManager>
             arIcons[i].SetActive(false);
         }
         environment.SetActive(true);
-        ARCamera.SetActive(false);
-        ARTarget.SetActive(false);
+        //end ar experience
+
         RootIconParent.SetActive(true);
         device.SetActive(true);
         player.SetActive(true);
         yield return new WaitForSeconds(1);
         cameraController.startNextAnimation();
         idleScreenAssets.SetActive(true);
+
     }
 
     public void startSignals()
